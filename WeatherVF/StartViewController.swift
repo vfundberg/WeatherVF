@@ -12,16 +12,30 @@ import Alamofire
 import SwiftyJSON
 
 
-class StartViewController: UIViewController {
+class StartViewController: UIViewController, CLLocationManagerDelegate {
+    
+    let URL = "http://api.openweathermap.org/data/2.5/weather"
+    
+    let location = CLLocationManager()
+    let weatherData =  WeatherData()
+    
+    
+    
     
     @IBOutlet weak var temp: UILabel!
     @IBOutlet weak var city: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
     
-    let weatherData =  WeatherData()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        location.delegate = self
+        location.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        location.requestWhenInUseAuthorization()
+        location.startUpdatingLocation()
+        
     }
     @IBAction func searchButtonPressed(_ sender: Any) {
     }
