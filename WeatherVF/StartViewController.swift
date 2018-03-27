@@ -7,13 +7,25 @@
 //
 
 import UIKit
+import CoreLocation
+import Alamofire
+import SwiftyJSON
+
 
 class StartViewController: UIViewController {
-
+    
+    @IBOutlet weak var temp: UILabel!
+    @IBOutlet weak var city: UILabel!
+    @IBOutlet weak var weatherImage: UIImageView!
+    
+    let weatherData =  WeatherData()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    @IBAction func searchButtonPressed(_ sender: Any) {
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

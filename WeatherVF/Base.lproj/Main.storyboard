@@ -10,6 +10,12 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AppleSDGothicNeo.ttc">
+            <string>AppleSDGothicNeo-Bold</string>
+            <string>AppleSDGothicNeo-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Start-->
         <scene sceneID="bkc-LQ-sH8">
@@ -22,41 +28,66 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bakgrundstart" translatesAutoresizingMaskIntoConstraints="NO" id="1ii-oc-qlp">
                                 <rect key="frame" x="16" y="64" width="343" height="583"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9aw-Ji-0VJ">
-                                <rect key="frame" x="125" y="497" width="125" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4GX-76-E7G">
+                                <rect key="frame" x="53" y="503" width="41" height="54"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="45"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d1T-6j-Fyl">
+                                <rect key="frame" x="53" y="567" width="162" height="29"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b9X-fT-930">
+                                <rect key="frame" x="196" y="503" width="56" height="56"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8wk-Qu-cor">
+                                <rect key="frame" x="278" y="617" width="81" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Om appen">
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="20"/>
+                                <state key="normal" title="Sök stad">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWO-Ql-MC1">
-                                <rect key="frame" x="125" y="162" width="125" height="30"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Väder">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
+                                <connections>
+                                    <action selector="searchButtonPressed:" destination="3S2-nq-M6N" eventType="touchUpInside" id="8aF-j5-LcZ"/>
+                                    <segue destination="gIH-y5-kV2" kind="show" id="5WG-Xr-xhQ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="1ii-oc-qlp" firstAttribute="centerX" secondItem="9aw-Ji-0VJ" secondAttribute="centerX" id="1Z2-1f-knH"/>
-                            <constraint firstItem="1ii-oc-qlp" firstAttribute="leading" secondItem="Qp5-Po-tl1" secondAttribute="leadingMargin" id="3TC-DA-x2Y"/>
-                            <constraint firstItem="aWO-Ql-MC1" firstAttribute="top" secondItem="tao-yC-uM4" secondAttribute="top" constant="98" id="8bc-fi-Zd5"/>
-                            <constraint firstAttribute="bottom" secondItem="1ii-oc-qlp" secondAttribute="bottom" constant="20" symbolic="YES" id="AHv-R7-xXG"/>
-                            <constraint firstItem="1ii-oc-qlp" firstAttribute="top" secondItem="tao-yC-uM4" secondAttribute="top" id="PPk-H8-BHE"/>
-                            <constraint firstItem="aWO-Ql-MC1" firstAttribute="leading" secondItem="tao-yC-uM4" secondAttribute="leading" constant="125" id="Z6a-Bb-W95"/>
-                            <constraint firstItem="aWO-Ql-MC1" firstAttribute="leading" secondItem="9aw-Ji-0VJ" secondAttribute="leading" id="pYM-Xj-nnq"/>
-                            <constraint firstItem="1ii-oc-qlp" firstAttribute="trailing" secondItem="Qp5-Po-tl1" secondAttribute="trailingMargin" id="sZ3-3V-s5w"/>
-                            <constraint firstItem="tao-yC-uM4" firstAttribute="bottom" secondItem="9aw-Ji-0VJ" secondAttribute="bottom" constant="140" id="w2X-Vl-d1u"/>
-                            <constraint firstItem="aWO-Ql-MC1" firstAttribute="trailing" secondItem="9aw-Ji-0VJ" secondAttribute="trailing" id="yLn-Lg-Ege"/>
+                            <constraint firstItem="4GX-76-E7G" firstAttribute="top" secondItem="tao-yC-uM4" secondAttribute="top" constant="439" id="80t-Ix-Hme"/>
+                            <constraint firstItem="d1T-6j-Fyl" firstAttribute="top" secondItem="4GX-76-E7G" secondAttribute="bottom" constant="10" id="9Qb-Lc-MwV"/>
+                            <constraint firstItem="tao-yC-uM4" firstAttribute="bottom" secondItem="d1T-6j-Fyl" secondAttribute="bottom" constant="71" id="CZS-Nf-NOh"/>
+                            <constraint firstItem="b9X-fT-930" firstAttribute="leading" secondItem="4GX-76-E7G" secondAttribute="trailing" constant="102" id="D6k-az-RbA"/>
+                            <constraint firstItem="4GX-76-E7G" firstAttribute="top" secondItem="b9X-fT-930" secondAttribute="top" id="F4T-Qq-NIk"/>
+                            <constraint firstItem="d1T-6j-Fyl" firstAttribute="top" secondItem="b9X-fT-930" secondAttribute="bottom" constant="8" symbolic="YES" id="Gfv-y4-1Of"/>
+                            <constraint firstItem="1ii-oc-qlp" firstAttribute="trailing" secondItem="Qp5-Po-tl1" secondAttribute="trailingMargin" id="Phr-BI-ho4"/>
+                            <constraint firstItem="d1T-6j-Fyl" firstAttribute="top" secondItem="4GX-76-E7G" secondAttribute="bottom" constant="10" id="Uou-dn-gS9"/>
+                            <constraint firstItem="d1T-6j-Fyl" firstAttribute="top" secondItem="b9X-fT-930" secondAttribute="bottom" constant="8" id="WBf-th-N0q"/>
+                            <constraint firstItem="1ii-oc-qlp" firstAttribute="top" secondItem="tao-yC-uM4" secondAttribute="top" id="cpC-0h-PrK"/>
+                            <constraint firstAttribute="bottom" secondItem="1ii-oc-qlp" secondAttribute="bottom" constant="20" symbolic="YES" id="dzi-rS-1Ze"/>
+                            <constraint firstItem="1ii-oc-qlp" firstAttribute="leading" secondItem="Qp5-Po-tl1" secondAttribute="leadingMargin" id="hBd-k9-NLv"/>
+                            <constraint firstItem="tao-yC-uM4" firstAttribute="trailing" secondItem="d1T-6j-Fyl" secondAttribute="trailing" constant="160" id="sOQ-aR-hKh"/>
+                            <constraint firstItem="1ii-oc-qlp" firstAttribute="centerX" secondItem="b9X-fT-930" secondAttribute="centerX" constant="-36.5" id="w4e-G1-b5H"/>
+                            <constraint firstItem="4GX-76-E7G" firstAttribute="leading" secondItem="tao-yC-uM4" secondAttribute="leading" constant="53" id="x31-Jt-rTT"/>
+                            <constraint firstItem="4GX-76-E7G" firstAttribute="leading" secondItem="d1T-6j-Fyl" secondAttribute="leading" id="ztb-S0-aTZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tao-yC-uM4"/>
                     </view>
                     <navigationItem key="navigationItem" id="1gH-vL-JUA"/>
+                    <connections>
+                        <outlet property="city" destination="d1T-6j-Fyl" id="doh-zl-6GV"/>
+                        <outlet property="temp" destination="4GX-76-E7G" id="bHe-Fv-YQp"/>
+                        <outlet property="weatherImage" destination="b9X-fT-930" id="9cu-G4-Z1b"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TbM-3J-NSy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1124" y="196.55172413793105"/>
+            <point key="canvasLocation" x="1123.5" y="196.5"/>
         </scene>
         <!--Weather Table View Controller-->
         <scene sceneID="z3f-gx-qT2">
