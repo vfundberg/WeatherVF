@@ -15,13 +15,15 @@ import SwiftyJSON
 class StartViewController: UIViewController, CLLocationManagerDelegate {
     
     let URL = "http://api.openweathermap.org/data/2.5/weather"
+    let APPID = "941747b308c30b1815669adf41489369"
     
-    let location = CLLocationManager()
+    let locationManager = CLLocationManager()
     let weatherData =  WeatherData()
     
     
     
     
+    @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var temp: UILabel!
     @IBOutlet weak var city: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
@@ -31,13 +33,19 @@ class StartViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        location.delegate = self
-        location.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        location.requestWhenInUseAuthorization()
-        location.startUpdatingLocation()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
         
+        view.bringSubview(toFront: temp)
+        view.bringSubview(toFront: city)
+        view.bringSubview(toFront: weatherImage)
+        view.bringSubview(toFront: searchButton)
     }
+    
     @IBAction func searchButtonPressed(_ sender: Any) {
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,7 +53,59 @@ class StartViewController: UIViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func getWeather(url : String, parameters : [String : String]) {
+        Alamofire.request(url, method: .get, parameters : parameters).responseJSON {
+            response in
+            if response.result.isSuccess {
+                print("Fick väderinformation")
+                let weatherJSON : JSON = JSON(response.result.value)
+                self.updateWeather(json: weatherJSON)
+            } else {
+                print("Error : \(response.result.error)")
+                self.city.text = "Kan ej ansluta"
+            }
+        }
+        
+    }
+    
+    func updateWeather(json : JSON) {
+        if let weatherResult = json["main"]["temp"].double {
+            
+            weatherData.temperature = Int(weatherResult - 273.15)
+            
+            weatherData.city = json["name"].stringValue
+            
+            weatherData.condition = json["weather"][0]["id"].intValue
+            
+            weatherData.image = weatherData.changeWeatherImage(condition: weatherData.condition)
+            
+            updateUI()
+            
+        } else {
+            city.text = "Ingen anslutning"
+        }
+    }
+    
+    func updateUI() {
+        city.text = weatherData.city
+        temp.text = "\(weatherData.temperature)º"
+        weatherImage.image = UIImage(named: weatherData.image)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[locations.count-1]
+        if location.horizontalAccuracy > 0 {
+            locationManager.stopUpdatingLocation()
+            locationManager.delegate = nil
+            
+            print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
+            let latitude = String(location.coordinate.latitude)
+            let longitude = String(location.coordinate.longitude)
+            let params : [String : String] = ["lat" : latitude, "lon" : longitude, "appid" : APPID]
+            
+            getWeather(url: URL, parameters: params)
+        }
+    }
     /*
     // MARK: - Navigation
 

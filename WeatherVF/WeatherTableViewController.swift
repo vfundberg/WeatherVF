@@ -8,44 +8,80 @@
 
 import UIKit
 
-class WeatherTableViewController: UITableViewController {
-
+class WeatherTableViewController: UITableViewController, UISearchResultsUpdating {
+   
+    var data : [String] = ["Göteborg","London","New York","Kairo","Bangkok"]
+    var searchController: UISearchController!
+    var searchResult : [String] = []
+    var shouldUseSearchResult : Bool {
+        if let t = searchController.searchBar.text {
+            if t.isEmpty {
+                return false
+            }
+        } else {
+            return false
+        }
+        return searchController.isActive
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        title = "Städer"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        definesPresentationContext = true
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if let text = searchController.searchBar.text {
+            searchResult = data.filter { $0.lowercased().contains(text.lowercased()) }
+        } else {
+            searchResult = []
+        }
+        tableView.reloadData()
+    }
+    
+    
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        if shouldUseSearchResult {
+            return searchResult.count
+        } else {
+            return data.count
+        }
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MyCell
+        
+        if shouldUseSearchResult {
+            cell.textLabel?.text = searchResult[indexPath.row]
+        } else {
+            cell.textLabel?.text = data[indexPath.row]
+        }
 
         return cell
     }
-    */
+ 
 
     /*
     // Override to support conditional editing of the table view.
