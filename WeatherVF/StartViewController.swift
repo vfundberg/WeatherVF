@@ -72,12 +72,14 @@ class StartViewController: UIViewController, CLLocationManagerDelegate {
         if let weatherResult = json["main"]["temp"].double {
             
             weatherData.temperature = Int(weatherResult - 273.15)
-            
             weatherData.city = json["name"].stringValue
-            
             weatherData.condition = json["weather"][0]["id"].intValue
-            
             weatherData.image = weatherData.changeWeatherImage(condition: weatherData.condition)
+            
+            print(weatherData.city)
+            print(weatherData.temperature)
+            print(weatherData.condition)
+            print(weatherData.image)
             
             updateUI()
             

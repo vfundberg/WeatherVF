@@ -7,10 +7,22 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+
+class MyTableViewCell: UITableViewCell {
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var tempLabel: UILabel!
+    
+}
 
 class WeatherTableViewController: UITableViewController, UISearchResultsUpdating {
    
-    var data : [String] = ["Göteborg","London","New York","Kairo","Bangkok"]
+    let URL = "http://api.openweathermap.org/data/2.5/weather"
+    let APPID = "941747b308c30b1815669adf41489369"
+    
+    
+    var tableViewData : [String] = []
     var searchController: UISearchController!
     var searchResult : [String] = []
     var shouldUseSearchResult : Bool {
@@ -34,7 +46,7 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
-        
+        fillTableViewWithCities()
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,14 +56,16 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
     
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text {
-            searchResult = data.filter { $0.lowercased().contains(text.lowercased()) }
+            searchResult = tableViewData.filter { $0.lowercased().contains(text.lowercased()) }
         } else {
             searchResult = []
         }
         tableView.reloadData()
     }
     
-    
+    func fillTableViewWithCities(){
+        tableViewData = ["Göteborg","London","Paris","Stockholm","Bangkok","Helsinki","Krakow"]
+    }
 
     // MARK: - Table view data source
 
@@ -65,18 +79,26 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
         if shouldUseSearchResult {
             return searchResult.count
         } else {
-            return data.count
+            return tableViewData.count
         }
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MyCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MyTableViewCell
+
+        
         
         if shouldUseSearchResult {
-            cell.textLabel?.text = searchResult[indexPath.row]
+            let cityName = searchResult[indexPath.row]
+            let cityTemp = String(searchResult.count + indexPath.row)
+            cell.cityLabel?.text = cityName
+            cell.tempLabel?.text = cityTemp
         } else {
-            cell.textLabel?.text = data[indexPath.row]
+            let cityName = tableViewData[indexPath.row]
+            let cityTemp = String(tableViewData.count + indexPath.row)
+            cell.cityLabel?.text = cityName
+            cell.tempLabel?.text = cityTemp
         }
 
         return cell
