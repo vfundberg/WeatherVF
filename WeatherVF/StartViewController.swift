@@ -12,23 +12,27 @@ import Alamofire
 import SwiftyJSON
 
 
-class StartViewController: UIViewController, CLLocationManagerDelegate {
+class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityDelegate, goBack {
+    
+   
     
     let URL = "http://api.openweathermap.org/data/2.5/weather"
     let APPID = "941747b308c30b1815669adf41489369"
     
     let locationManager = CLLocationManager()
     let weatherData =  WeatherData()
+    var favorites : [WeatherData] = []
+    var citys : [WeatherData] = []
+    var cityFavorites : [String] = []
     
-    
-    
-    
-    @IBOutlet weak var searchButton: UIButton!
-    @IBOutlet weak var temp: UILabel!
     @IBOutlet weak var city: UILabel!
+    @IBOutlet weak var temp: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
-    
-    
+    @IBOutlet weak var wind: UILabel!
+    @IBOutlet weak var humidity: UILabel!
+    @IBOutlet weak var clothesRecomendations: UITextView!
+    @IBOutlet weak var favoritesButton: UIButton!
+    @IBOutlet weak var searchButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,10 +45,17 @@ class StartViewController: UIViewController, CLLocationManagerDelegate {
         view.bringSubview(toFront: temp)
         view.bringSubview(toFront: city)
         view.bringSubview(toFront: weatherImage)
+        view.bringSubview(toFront: wind)
+        view.bringSubview(toFront: humidity)
+        view.bringSubview(toFront: clothesRecomendations)
+        view.bringSubview(toFront: favoritesButton)
         view.bringSubview(toFront: searchButton)
     }
     
-    @IBAction func searchButtonPressed(_ sender: Any) {
+    @IBAction func addToFavorite(_ sender: Any) {
+        let addCity = city.text
+        citys.append(weatherData)
+        cityFavorites.append(addCity!)
         
     }
     
@@ -74,24 +85,37 @@ class StartViewController: UIViewController, CLLocationManagerDelegate {
             weatherData.temperature = Int(weatherResult - 273.15)
             weatherData.city = json["name"].stringValue
             weatherData.condition = json["weather"][0]["id"].intValue
+            weatherData.windSpeed = json["wind"]["speed"].intValue
+            weatherData.humidity = json["main"]["humidity"].intValue
             weatherData.image = weatherData.changeWeatherImage(condition: weatherData.condition)
+            weatherData.clothesRecomendations = weatherData.setClothesRecomendations(condition: weatherData.condition, temperature: weatherData.temperature)
             
             print(weatherData.city)
             print(weatherData.temperature)
             print(weatherData.condition)
+            print(weatherData.windSpeed)
+            print(weatherData.humidity)
             print(weatherData.image)
             
-            updateUI()
+            updateUI(newCity : weatherData)
             
         } else {
-            city.text = "Ingen anslutning"
+            city.text = "No Connection"
         }
     }
     
-    func updateUI() {
-        city.text = weatherData.city
-        temp.text = "\(weatherData.temperature)º"
-        weatherImage.image = UIImage(named: weatherData.image)
+    func updateUI(newCity : WeatherData) {
+        city.text = newCity.city
+        temp.text = "\(newCity.temperature)º"
+        weatherImage.image = UIImage(named: newCity.image)
+        wind.text = "Wind Speed: \(newCity.windSpeed) m/s"
+        humidity.text = "Humidity: \(newCity.humidity) %"
+        clothesRecomendations.text = newCity.clothesRecomendations
+    }
+    
+    func updateUI(newCity: String) {
+        let params : [String : String] = ["q" : newCity, "appid" : APPID]
+        getWeather(url: URL, parameters: params)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -108,14 +132,23 @@ class StartViewController: UIViewController, CLLocationManagerDelegate {
             getWeather(url: URL, parameters: params)
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func enteredACity(theCity : String) {
+        let params : [String : String] = ["q" : theCity, "appid" : APPID]
+        getWeather(url: URL, parameters: params)
     }
-    */
+    
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "changeCity" {
+            let destinationVC = segue.destination as! SearchViewController
+            destinationVC.delegate = self
+        } else if segue.identifier == "addFavorite" || segue.identifier == "showFavorites" {
+            let destinationVC = segue.destination as! WeatherTableViewController
+            destinationVC.favoriteCities = cityFavorites
+            destinationVC.cityList = favorites
+        }
+
+    }
+ 
 
 }
