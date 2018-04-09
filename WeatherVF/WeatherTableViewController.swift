@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 
 protocol goBack {
-    func updateUI(newCity : String)
+    func updateUIFromFavorites(newCity : String)
 }
 
 class WeatherTableViewController: UITableViewController, UISearchResultsUpdating {
@@ -118,12 +118,12 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if shouldUseSearchResult {
             let city = searchResult[indexPath.row]
-            backDelegate?.updateUI(newCity: city)
+            backDelegate?.updateUIFromFavorites(newCity: city)
             navigationController?.popViewController(animated: true)
             self.dismiss(animated: true, completion: nil)
         } else {
             let city = favoriteCities[indexPath.row]
-            backDelegate?.updateUI(newCity: city)
+            backDelegate?.updateUIFromFavorites(newCity: city)
             navigationController?.popViewController(animated: true)
             self.dismiss(animated: true, completion: nil)
         }

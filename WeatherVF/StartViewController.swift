@@ -56,7 +56,7 @@ class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityD
         let addCity = city.text
         citys.append(weatherData)
         cityFavorites.append(addCity!)
-        
+        print(cityFavorites)
     }
     
     override func didReceiveMemoryWarning() {
@@ -68,12 +68,12 @@ class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityD
         Alamofire.request(url, method: .get, parameters : parameters).responseJSON {
             response in
             if response.result.isSuccess {
-                print("Fick väderinformation")
+                print("Got weather information")
                 let weatherJSON : JSON = JSON(response.result.value)
                 self.updateWeather(json: weatherJSON)
             } else {
                 print("Error : \(response.result.error)")
-                self.city.text = "Kan ej ansluta"
+                self.city.text = "Can't connect"
             }
         }
         
@@ -113,7 +113,7 @@ class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityD
         clothesRecomendations.text = newCity.clothesRecomendations
     }
     
-    func updateUI(newCity: String) {
+    func updateUIFromFavorites(newCity: String) {
         let params : [String : String] = ["q" : newCity, "appid" : APPID]
         getWeather(url: URL, parameters: params)
     }

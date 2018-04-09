@@ -42,9 +42,32 @@ class WeatherData {
         }
     }
     func setClothesRecomendations(condition : Int, temperature : Int) -> String {
+        switch (condition) {
+        case 200...232 :
+            return "Don't stand under a big tree, it might hurt"
+        case 301...321, 520...531 :
+            return "Bring an umbrella!"
+        case 511, 600...622 :
+            return "Dress warm and keep your feet warm. If they get cold, you're screwed."
+        case 700...781 :
+            return ""
+        case 800 :
+            if temperature > 15 {
+                return "Don't forget to wear sunblock"
+            } else {
+                return "Don't let the sun fool you, bring an extra shirt"
+            }
+        case 801 :
+            return "I suggest you bring a shirt, you never know with mother nature"
+        case 802 :
+            return ""
+        case 803, 804 :
+            return ""
+        default :
+            return ""
+        }
         
-        
-        return "hej"
+    
     }
     
     
