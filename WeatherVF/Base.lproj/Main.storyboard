@@ -65,7 +65,7 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <state key="normal" title="Favorites"/>
                                 <connections>
-                                    <segue destination="H0a-gJ-evW" kind="show" id="7XS-BP-7N8"/>
+                                    <segue destination="H0a-gJ-evW" kind="show" identifier="showFavorites" id="7XS-BP-7N8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Zn-Xs-l0S">
