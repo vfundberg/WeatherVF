@@ -12,7 +12,7 @@ import Alamofire
 import SwiftyJSON
 
 
-class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityDelegate, goBack {
+class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityDelegate {
     
    
     
@@ -142,8 +142,9 @@ class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityD
         if segue.identifier == "changeCity" {
             let destinationVC = segue.destination as! SearchViewController
             destinationVC.delegate = self
-        } else if segue.identifier == "addFavorite" || segue.identifier == "showFavorites" {
+        } else if segue.identifier == "showFavorites" {
             let destinationVC = segue.destination as! WeatherTableViewController
+            destinationVC.delegate = self
             destinationVC.favoriteCities = cityFavorites
             destinationVC.cityList = favorites
         }

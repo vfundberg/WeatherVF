@@ -10,9 +10,6 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-protocol goBack {
-    func updateUIFromFavorites(newCity : String)
-}
 
 class WeatherTableViewController: UITableViewController, UISearchResultsUpdating {
    
@@ -24,7 +21,7 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
     var searchResult : [String] = []
     var favoriteCities : [String] = []
     var cityList : [WeatherData] = []
-    var backDelegate : goBack?
+    var delegate : NewCityDelegate?
     
     var shouldUseSearchResult : Bool {
         if let t = searchController.searchBar.text {
@@ -39,7 +36,7 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Search for your city"
+        title = "Search among your favorites"
         definesPresentationContext = true
         
         searchController = UISearchController(searchResultsController: nil)
@@ -118,14 +115,16 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if shouldUseSearchResult {
             let city = searchResult[indexPath.row]
-            backDelegate?.updateUIFromFavorites(newCity: city)
             navigationController?.popViewController(animated: true)
+            delegate?.enteredACity(theCity: city)
             self.dismiss(animated: true, completion: nil)
+            print(city)
         } else {
             let city = favoriteCities[indexPath.row]
-            backDelegate?.updateUIFromFavorites(newCity: city)
             navigationController?.popViewController(animated: true)
+            delegate?.enteredACity(theCity: city)
             self.dismiss(animated: true, completion: nil)
+            print(city)
         }
     }
 

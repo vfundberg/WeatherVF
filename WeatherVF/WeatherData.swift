@@ -38,7 +38,7 @@ class WeatherData {
         case 803, 804 :
             return "darkclouds"
         default :
-            return ""
+            return "dunno"
         }
     }
     func setClothesRecomendations(condition : Int, temperature : Int) -> String {
@@ -60,11 +60,11 @@ class WeatherData {
         case 801 :
             return "I suggest you bring a shirt, you never know with mother nature"
         case 802 :
-            return ""
+            return "The weather is unpredictable today, I have no good advice for you."
         case 803, 804 :
-            return ""
+            return "The weather is unpredictable today, I have no good advice for you."
         default :
-            return ""
+            return "The weather is unpredictable today, I have no good advice for you."
         }
         
     
