@@ -33,6 +33,7 @@ class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityD
     @IBOutlet weak var clothesRecomendations: UITextView!
     @IBOutlet weak var favoritesButton: UIButton!
     @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var addToFavoriteButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +58,23 @@ class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityD
         citys.append(weatherData)
         cityFavorites.append(addCity!)
         print(cityFavorites)
+        UIView.animate(withDuration: 0.5, delay: 1.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            self.addToFavoriteButton.alpha = 0.0
+        }, completion: nil)
+    }
+    func showButtons(){
+        for c in cityFavorites {
+            if city.text == c {
+                self.addToFavoriteButton.alpha = 0.0
+                print("City is in favorite list, button not showing")
+            } else {
+                UIView.animate(withDuration: 0.5, delay: 1.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                    self.addToFavoriteButton.alpha = 1.0
+                    self.favoritesButton.alpha = 1.0
+                    self.searchButton.alpha = 1.0
+                }, completion: nil)
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -111,6 +129,7 @@ class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityD
         wind.text = "Wind Speed: \(newCity.windSpeed) m/s"
         humidity.text = "Humidity: \(newCity.humidity) %"
         clothesRecomendations.text = newCity.clothesRecomendations
+        showButtons()
     }
     
     func updateUIFromFavorites(newCity: String) {
@@ -150,6 +169,4 @@ class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityD
         }
 
     }
- 
-
 }
