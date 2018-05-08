@@ -13,7 +13,11 @@ protocol NewCityDelegate {
 }
 
 class SearchViewController: UIViewController {
-
+    
+    @IBOutlet weak var logoView: UIImageView!
+    var gravity : UIGravityBehavior!
+    var animator : UIDynamicAnimator!
+    var collision : UICollisionBehavior!
     var delegate : NewCityDelegate?
     
     
@@ -21,6 +25,13 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        logoView.image = UIImage(named: "AppIcon")
+        animator = UIDynamicAnimator(referenceView: self.view)
+        gravity = UIGravityBehavior(items: [logoView])
+        collision = UICollisionBehavior(items: [logoView])
+        collision.translatesReferenceBoundsIntoBoundary = true
+        animator.addBehavior(gravity)
+        animator.addBehavior(collision)
 
         // Do any additional setup after loading the view.
     }

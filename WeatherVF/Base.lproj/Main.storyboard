@@ -168,6 +168,10 @@
                                     <action selector="searchButtonPressed:" destination="BHZ-g9-bv6" eventType="touchUpInside" id="kzi-tv-eh4"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N0R-pb-Z5a">
+                                <rect key="frame" x="129" y="64" width="117" height="107"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.85042194149999994" green="0.93721217339999996" blue="0.96517544980000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -185,6 +189,7 @@
                         <viewLayoutGuide key="safeArea" id="wOX-DF-6wF"/>
                     </view>
                     <connections>
+                        <outlet property="logoView" destination="N0R-pb-Z5a" id="SVR-zl-lzO"/>
                         <outlet property="newCityTextField" destination="zif-qd-W4G" id="psg-PJ-JGA"/>
                     </connections>
                 </viewController>

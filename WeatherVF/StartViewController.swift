@@ -14,8 +14,6 @@ import SwiftyJSON
 
 class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityDelegate {
     
-   
-    
     let URL = "http://api.openweathermap.org/data/2.5/weather"
     let APPID = "941747b308c30b1815669adf41489369"
     
@@ -42,6 +40,7 @@ class StartViewController: UIViewController, CLLocationManagerDelegate, NewCityD
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
         
         view.bringSubview(toFront: temp)
         view.bringSubview(toFront: city)
